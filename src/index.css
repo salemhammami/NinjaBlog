@@ -46,3 +46,11 @@
   color: #f1356d;
   margin-bottom: 8px;
 }
+button {
+  background-color: #f1356d;
+  color: white;
+  border-radius: 5px;
+  height: 30px;
+  border: none;
+  margin-top: 10px;
+}
