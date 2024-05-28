@@ -54,3 +54,7 @@ button {
   border: none;
   margin-top: 10px;
 }
+
+.blog-preview a {
+  text-decoration: none;
+}

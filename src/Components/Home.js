@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BlogList from "./BlogList";
+import useFetch from "../useFetch";
 
 const Home = () => {
   // const [blogs, setBlogs] = useState([
@@ -12,26 +13,23 @@ const Home = () => {
   //     id: 3,
   //   },
   // ]);
-  const [blogs, setBlogs] = useState(null);
-  const handleDelete = (id) => {
-    const newBlogs = blogs.filter((blog) => blog.id !== id);
-    setBlogs(newBlogs);
+
+  //https://fakestoreapi.com/products
+  const {
+    data: blogs,
+    isPending,
+    error,
+  } = useFetch("http://localhost:8000/blogs");
+  const [isOpened, setIsOpened] = useState(true);
+  const toggle = () => {
+    setIsOpened(!isOpened);
   };
-
-  useEffect(() => {
-    fetch("http://localhost:8000/blogs")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setBlogs(data);
-      });
-  }, []);
-
   return (
     <div className="home">
-      {blogs && <BlogList blogs={blogs} handleDelete={handleDelete} />}
+      {error && <div> {error} </div>}
+      <button onClick={toggle}> {isOpened ? "Close" : "Open"} </button>
+      {isPending && <div> Loading...</div>}
+      {isOpened && blogs && <BlogList blogs={blogs} />}
     </div>
   );
 };
